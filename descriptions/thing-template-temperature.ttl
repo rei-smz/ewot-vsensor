@@ -1,0 +1,57 @@
+prefix wot: <http://iot.linkeddata.es/def/wot#>
+prefix core: <http://iot.linkeddata.es/def/core#>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix sosa: <http://www.w3.org/ns/sosa/>
+prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+prefix ssn: <http://www.w3.org/ns/ssn/>
+prefix adp: <http://iot.linkeddata.es/def/adapters#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix map: <http://iot.linkeddata.es/def/wot-mappings#> 
+prefix saref4bldg: <https://w3id.org/def/saref4bldg#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix s4city: <https://w3id.org/def/saref4city#>
+
+<http://localhost:8080/house/temperature/data> a wot:Thing ;
+	wot:name "Smart house at Carleton University" ;
+	core:represents <http://localhost:8080/house/temperature/data/object> ;
+	core:isLocatedAt <http://localhost/house/temperature/data/city/ottawa>, <http://localhost/house/temperature/data/country/canada>, <http://localhost:8080/house/temperature/data/building/sh> ;
+	wot:providesInteractionPattern <http://localhost:8080/house/temperature/property/temperature> ;
+	core:hasOwner <http://localhost/owner> .
+
+<http://localhost:8080/house/temperature/data/object> a adp:TemperatureMeter;
+	core:deviceName "House temperature metter";
+	core:serialNumber "localhost:8080" ;
+	core:isRepresentedBy <http://localhost:8080/house/temperature/data> ;
+	core:hasVendor <http://localhost/vendor> .
+
+<http://localhost/vendor> a core:Agent;
+	foaf:name "eMeter hardware";
+	foaf:openid "eMeter L.S.";
+	rdfs:label "eMeter hardware" ;
+	core:owns <http://localhost:8080/house/temperature/data/object> .
+
+<http://localhost/owner> a core:Agent ;
+	foaf:name "Carleton University";
+	foaf:openid "https://carleton.ca/";
+	rdfs:label "Carleton University" .
+
+<http://localhost/house/temperature/data/city/ottawa> a s4city:City ;
+	rdfs:label "Ottawa" . 
+
+<http://localhost/house/temperature/data/country/canada> a s4city:Country ;
+	rdfs:label "Canada" .
+
+<http://localhost:8080/house/temperature/data/building/sh> a saref4bldg:Building;
+	rdfs:label "Smart house number localhost:8080" .
+
+<http://localhost:8080/house/temperature/property/temperature> a wot:Property ;
+	core:hasValue <http://localhost:8080/house/temperature/property/temperature/value> ; 
+	wot:isWritable false ;
+	wot:interactionName "Global temperature of the house" ;
+	<http://www.wurvoc.org/vocabularies/om-1.8/Unit_of_measure> adp:Celsius ;
+	wot:isAccessibleThrough <http://localhost:8080/house/temperature/data/access_point> ;
+	sosa:observes adp:Temperature . 
+
+<http://localhost:8080/house/temperature/data/access_point> a wot:Link;
+  wot:href "http://localhost:8080/house/temperature/data";
+  wot:mediaType "application/json" .

@@ -1,0 +1,33 @@
+prefix wot: <http://iot.linkeddata.es/def/wot#>
+prefix core: <http://iot.linkeddata.es/def/core#>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix sosa: <http://www.w3.org/ns/sosa/>
+prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+prefix ssn: <http://www.w3.org/ns/ssn/>
+prefix adp: <http://iot.linkeddata.es/def/adapters#> 
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+prefix map: <http://iot.linkeddata.es/def/wot-mappings#> 
+
+<http://localhost:8080/house/temperature/data/access_point> a wot:Link;
+  wot:href "http://localhost:8080/house/temperature/data";
+  wot:mediaType "application/json" .
+  
+# Temperature
+
+<http://localhost:8080/house/temperature/property/temperature/value> core:isDescribedBy <http://localhost:8080/house/temperature/data/td/temperature>.
+<http://localhost:8080/house/temperature/data/td/temperature> a core:ThingDescription;
+  <http://iot.linkeddata.es/def/core#describes> <http://localhost:8080/house/temperature/property/temperature/value>;
+  <http://iot.linkeddata.es/def/wot-mappings#hasAccessMapping> <http://localhost:8080/accessmappings/house/temperature> .
+
+  <http://localhost:8080/accessmappings/house/temperature> <http://iot.linkeddata.es/def/wot-mappings#hasMapping> <http://localhost:8080/mappings/temperature/10>,  <http://localhost:8080/mappings/temperature/11>,  <http://localhost:8080/mappings/temperature/12>;
+  <http://iot.linkeddata.es/def/wot-mappings#mapsResourceFrom> <http://localhost:8080/house/temperature/data/access_point> .
+
+ <http://localhost:8080/mappings/temperature/10> a <http://iot.linkeddata.es/def/wot-mappings#ObjectProperty> ;
+    <http://iot.linkeddata.es/def/wot-mappings#predicate> "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+    <http://iot.linkeddata.es/def/wot-mappings#targetClass> "http://iot.linkeddata.es/def/core#Value".
+<http://localhost:8080/mappings/temperature/11> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
+    <http://iot.linkeddata.es/def/wot-mappings#predicate> "http://iot.linkeddata.es/def/core#literalValue";
+    <http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.temperature".
+<http://localhost:8080/mappings/temperature/12> a <http://iot.linkeddata.es/def/wot-mappings#DataProperty> ;
+    <http://iot.linkeddata.es/def/wot-mappings#predicate> "http://iot.linkeddata.es/def/core#timestamp";
+    <http://iot.linkeddata.es/def/wot-mappings#jsonPath> "$.timestamp".
