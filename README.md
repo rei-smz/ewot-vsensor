@@ -2,7 +2,7 @@
 Prerequisites: golang and python runtime
 1. Clone this repo
 ```
-git clone https://github.com/rei-smz/ewot-app.git && cd ewot-app
+git clone https://github.com/rei-smz/ewot-app.git && cd ewot-vsensor
 ```
 2. Edit the GraphDB repository endpoint and the description directory in `deploy-temperature.sh` as follow.
 ```
